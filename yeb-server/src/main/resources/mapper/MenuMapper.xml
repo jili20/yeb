@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxx.server.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxx.server.pojo.Menu">
+        <id column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="path" property="path"/>
+        <result column="component" property="component"/>
+        <result column="name" property="name"/>
+        <result column="icon_cls" property="iconCls"/>
+        <result column="keep_alive" property="keepAlive"/>
+        <result column="require_auth" property="requireAuth"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="enabled" property="enabled"/>
+    </resultMap>
+
+    <resultMap id="Menus" type="com.xxx.server.pojo.Menu" extends="BaseResultMap">
+        <collection property="children" ofType="com.xxx.server.pojo.Menu">
+            <id column="id2" property="id"/>
+            <result column="url2" property="url"/>
+            <result column="path2" property="path"/>
+            <result column="component2" property="component"/>
+            <result column="name2" property="name"/>
+            <result column="iconCls2" property="iconCls"/>
+            <result column="keepAlive2" property="keepAlive"/>
+            <result column="requireAuth2" property="requireAuth"/>
+            <result column="parentId2" property="parentId"/>
+            <result column="enabled2" property="enabled"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="MenusWithRole" type="com.xxx.server.pojo.Menu" extends="BaseResultMap">
+        <collection property="roles" ofType="com.xxx.server.pojo.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="MenusWithChildren" type="com.xxx.server.pojo.Menu" extends="BaseResultMap">
+        <id column="id1" property="id" />
+        <result column="name1" property="name" />
+        <collection property="children" ofType="com.xxx.server.pojo.Menu">
+            <id column="id2" property="id" />
+            <result column="name2" property="name" />
+            <collection property="children" ofType="com.xxx.server.pojo.Menu">
+                <id column="id3" property="id" />
+                <result column="name3" property="name" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <!-- 根据用户 id 查询菜单列表 -->
+    <select id="getMenusByAdminId" resultMap="Menus">
+        SELECT DISTINCT
+            m1.*,
+            m2.id         as id2,
+            m2.url        as url2,
+            m2.path       as path2,
+            m2.component  as component2,
+            m2.name       as name2,
+            m2.icon_cls   as iconCls2,
+            m2.keep_alive as keepAlive2,
+            m2.require_auth AS requireAuth2,
+            m2.parent_id  as parentId2,
+            m2.enabled    as enabled2
+
+        FROM
+            t_menu m1,
+            t_menu m2,
+            t_admin_role ar,
+            t_menu_role mr
+        WHERE
+            m1.id =m2.parent_id
+        AND
+            m2.id = mr.mid
+        AND
+            mr.rid=ar.rid
+        AND
+            ar.admin_id=#{id}
+        AND
+            m2.enabled=TRUE
+        ORDER BY
+            m2.id
+    </select>
+
+
+
+    <!-- 根据角色获取菜单列表 -->
+    <select id="getMenusWithRole" resultMap="MenusWithRole">
+        SELECT
+            m.*,
+            r.id AS rid,
+            r.name AS rname,
+            r.name_zh AS rnameZh
+
+        FROM
+            t_menu m,
+            t_menu_role mr,
+            t_role r
+        WHERE
+            m.id = mr.mid
+        AND
+            r.id = mr.rid
+        ORDER BY m.id
+    </select>
+
+
+
+    <!-- 查询所有菜单 -->
+    <select id="getAllMenus" resultMap="MenusWithChildren">
+        SELECT
+            m1.id AS id1,
+            m1.name AS name1,
+            m2.id AS id2,
+            m2.name AS name2,
+            m3.id AS id3,
+            m3.name AS name3
+        FROM
+            t_menu m1,
+            t_menu m2,
+            t_menu m3
+        WHERE
+            m1.id = m2.parent_id
+        AND
+            m2.id = m3.parent_id
+        AND
+            m3.enabled=TRUE
+    </select>
+
+</mapper>

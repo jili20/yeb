@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxx.server.mapper.RoleMapper">
+
+    <!-- 根据用户 id 查询对应角色列表 -->
+    <select id="getRoles" resultType="com.xxx.server.pojo.Role">
+        SELECT
+            r.id,
+            r.name,
+            r.name_zh
+        FROM
+            t_role r
+        LEFT JOIN
+            t_admin_role ar ON r.id=ar.rid
+        WHERE
+            ar.`admin_id`=#{adminId}
+    </select>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxx.server.mapper.MenuRoleMapper">
+
+
+    <!-- 更新角色菜单 -->
+    <insert id="insertRecord">
+        insert into t_menu_role(mid,rid) values
+        <!-- 传入的 ids 数组，用逗号分隔 ,-->
+        <foreach collection="mids" item="mid" separator=",">
+            (#{mid},#{rid})
+        </foreach>
+    </insert>
+
+</mapper>
