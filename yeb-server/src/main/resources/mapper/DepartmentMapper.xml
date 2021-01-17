@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.DepartmentMapper">
 
-    <!-- 通用查询映射结果 -->
-    <!--    <resultMap id="BaseResultMap" type="Department">-->
-    <!--        <id column="id" property="id"/>-->
-    <!--        <result column="name" property="name"/>-->
-    <!--        <result column="parent_id" property="parentId"/>-->
-    <!--        <result column="dep_path" property="depPath"/>-->
-    <!--        <result column="enabled" property="enabled"/>-->
-    <!--        <result column="is_parent" property="isParent"/>-->
-    <!--    </resultMap>-->
-
     <!-- 相当于 递归查询 -->
     <resultMap id="DepartmentWithChildren" type="com.xxx.server.pojo.Department">
         <collection property="children" ofType="com.xxx.server.pojo.Department"
@@ -33,6 +23,11 @@
         jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
 
     </insert>
+
+    <!-- 删除部门 : 调用存储过程 CALLABLE -->
+    <delete id="deleteDep" statementType="CALLABLE">
+        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+    </delete>
 
     <!-- 获取所有部门 -->
     <select id="getAllDepartments" resultMap="DepartmentWithChildren">
