@@ -2,6 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.AdminMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxx.server.pojo.Admin">
+        <!--  -->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="telephone" property="telephone"/>
+        <result column="address" property="address"/>
+        <result column="enabled" property="enabled"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="user_face" property="userFace"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
 
+    <resultMap id="AdminWithRole" type="com.xxx.server.pojo.Admin" extends="BaseResultMap">
+        <collection property="roles" ofType="com.xxx.server.pojo.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
 
+    <!-- 获取所有操作员 -->
+    <select id="getAllAdmins" resultMap="AdminWithRole">
+        SELECT
+        a.*,
+        r.id AS rid,
+        r.name AS rname,
+        r.name_zh AS rnameZh
+        FROM
+        t_admin a
+        LEFT JOIN
+        t_admin_role ar ON a.id = ar.`admin_id`
+        LEFT JOIN
+        t_role r ON r.id = ar.`rid`
+        WHERE
+        a.id !=#{id}
+        <!-- 不传关键字 查所有 -->
+        <if test="null!=keywords and ''!=keywords">
+            AND a.`name` LIKE CONCAT('%',#{keywords}, '%')
+        </if>
+        ORDER BY
+        a.id
+    </select>
 </mapper>

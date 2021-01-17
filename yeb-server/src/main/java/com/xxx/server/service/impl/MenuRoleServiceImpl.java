@@ -6,7 +6,6 @@ import com.xxx.server.mapper.MenuRoleMapper;
 import com.xxx.server.pojo.MenuRole;
 import com.xxx.server.service.MenuRoleService;
 import com.xxx.server.utils.RespBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

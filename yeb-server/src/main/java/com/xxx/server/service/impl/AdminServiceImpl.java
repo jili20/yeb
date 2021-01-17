@@ -6,6 +6,7 @@ import com.xxx.server.mapper.AdminMapper;
 import com.xxx.server.mapper.RoleMapper;
 import com.xxx.server.pojo.Admin;
 import com.xxx.server.pojo.Role;
+import com.xxx.server.utils.AdminUtils;
 import com.xxx.server.utils.RespBean;
 import com.xxx.server.service.AdminService;
 import com.xxx.server.config.security.component.JwtTokenUtil;
@@ -113,6 +114,16 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public List<Role> getRoles(Integer adminId) {
         return roleMapper.getRoles(adminId);
+    }
+
+    /**
+     * 获取所有操作员
+     * @param keywords
+     * @return
+     */
+    @Override
+    public List<Admin> getAllAdmins(String keywords) {
+        return baseMapper.getAllAdmins(AdminUtils.getCurrentAdmin().getId(),keywords);
     }
 
 
