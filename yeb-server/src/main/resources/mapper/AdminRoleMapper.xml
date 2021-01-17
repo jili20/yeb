@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.AdminRoleMapper">
 
+
+    <!-- 更新操作员角色 -->
+    <update id="addAdminRole">
+        insert into t_admin_role(admin_id,rid) values
+        <foreach collection="rids" item="rid" separator=",">
+            (#{adminId},#{rid})
+        </foreach>
+    </update>
 </mapper>

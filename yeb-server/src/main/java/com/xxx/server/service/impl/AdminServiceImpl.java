@@ -3,8 +3,10 @@ package com.xxx.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxx.server.mapper.AdminMapper;
+import com.xxx.server.mapper.AdminRoleMapper;
 import com.xxx.server.mapper.RoleMapper;
 import com.xxx.server.pojo.Admin;
+import com.xxx.server.pojo.AdminRole;
 import com.xxx.server.pojo.Role;
 import com.xxx.server.utils.AdminUtils;
 import com.xxx.server.utils.RespBean;
@@ -19,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -53,6 +56,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private AdminMapper adminMapper;
+
+    @Autowired
+    private AdminRoleMapper adminRoleMapper;
 
     /**
      * 登录之后返回 token
@@ -124,6 +130,25 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Override
     public List<Admin> getAllAdmins(String keywords) {
         return baseMapper.getAllAdmins(AdminUtils.getCurrentAdmin().getId(),keywords);
+    }
+
+    /**
+     * 更新操作员角色
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    @Override
+    @Transactional // 开启事务
+    public RespBean addAdminRole(Integer adminId, Integer[] rids) {
+        // 先删除全部，后调用方法重新全部添加
+        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("admin_id",adminId));
+        Integer result = adminRoleMapper.addAdminRole(adminId, rids);
+        if (rids.length==result) {
+            return RespBean.success("更新成功！");
+        }
+        return RespBean.error("更新失败！");
+
     }
 
 

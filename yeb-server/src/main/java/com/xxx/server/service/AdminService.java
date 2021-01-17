@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xxx.server.pojo.Admin;
 import com.xxx.server.pojo.Role;
 import com.xxx.server.utils.RespBean;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public interface AdminService extends IService<Admin> {
 
     /**
      * 根据用户 id 查询对应角色列表
+     *
      * @param adminId
      * @return
      */
@@ -45,8 +47,17 @@ public interface AdminService extends IService<Admin> {
 
     /**
      * 获取所有操作员
+     *
      * @param keywords
      * @return
      */
     List<Admin> getAllAdmins(String keywords);
+
+    /**
+     * 更新操作员角色
+     * @param adminId
+     * @param rids
+     * @return
+     */
+    RespBean addAdminRole(Integer adminId, Integer[] rids);
 }
