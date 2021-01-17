@@ -12,8 +12,10 @@ import java.util.stream.Collectors;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,6 +55,7 @@ public class Admin implements Serializable, UserDetails {
     private String address;
 
     @ApiModelProperty(value = "是否启用")
+    @Getter(AccessLevel.NONE) // 不需要生成 get 方法，防止与 UserDetails 重写的 isEnabled 冲突
     private Boolean enabled;
 
     @ApiModelProperty(value = "用户名")
@@ -104,6 +107,5 @@ public class Admin implements Serializable, UserDetails {
     @Override
     public boolean isEnabled() {
         return this.enabled;
-//        return true;
     }
 }
