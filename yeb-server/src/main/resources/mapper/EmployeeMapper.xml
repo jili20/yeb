@@ -2,4 +2,117 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.EmployeeMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="Employee">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="id_card" property="idCard"/>
+        <result column="wedlock" property="wedlock"/>
+        <result column="nation_id" property="nationId"/>
+        <result column="native_lace" property="nativePlace"/>
+        <result column="politic_id" property="politicId"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="job_level_id" property="jobLevelId"/>
+        <result column="pos_id" property="posId"/>
+        <result column="engage_form" property="engageForm"/>
+        <result column="tiptop_degree" property="tiptopDegree"/>
+        <result column="specialty" property="specialty"/>
+        <result column="school" property="school"/>
+        <result column="begin_date" property="beginDate"/>
+        <result column="work_state" property="workState"/>
+        <result column="work_id" property="workID"/>
+        <result column="contract_term" property="contractTerm"/>
+        <result column="conversion_time" property="conversionTime"/>
+        <result column="notWork_date" property="notWorkDate"/>
+        <result column="begin_contract" property="beginContract"/>
+        <result column="end_contract" property="endContract"/>
+        <result column="work_age" property="workAge"/>
+        <result column="salary_id" property="salaryId"/>
+    </resultMap>
+
+    <resultMap id="EmployeeInfo" type="com.xxx.server.pojo.Employee" extends="BaseResultMap">
+        <!-- property="nation" 对象 -->
+        <association property="nation" javaType="com.xxx.server.pojo.Nation">
+            <!-- column="nid" 数据库表字段别名，property="name" 实体类属性名；-->
+            <id column="nid" property="id"/>
+            <result column="nname" property="name"/>
+        </association>
+        <association property="politicsStatus" javaType="com.xxx.server.pojo.PoliticsStatus">
+            <id column="pid" property="id"/>
+            <result column="pname" property="name"/>
+        </association>
+        <association property="department" javaType="com.xxx.server.pojo.Department">
+            <id column="did" property="id"/>
+            <result column="dname" property="name"/>
+        </association>
+        <association property="joblevel" javaType="com.xxx.server.pojo.Joblevel">
+            <id column="jid" property="id"/>
+            <result column="jname" property="name"/>
+        </association>
+        <association property="position" javaType="com.xxx.server.pojo.Position">
+            <id column="posid" property="id"/>
+            <result column="posname" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="getEmployeeByPage" resultMap="EmployeeInfo">
+        SELECT
+        e.*,
+        n.id AS nid,
+        n.name AS nname,
+        p.id AS pid,
+        P.name AS pname,
+        d.id AS did,
+        d.name AS dname,
+        j.id AS jid,
+        j.name AS jname,
+        pos.id AS posid,
+        pos.name AS posname
+        FROM
+        t_employee e,
+        t_nation n,
+        t_politics_status p,
+        t_department d,
+        t_joblevel j,
+        t_position pos
+        WHERE e.nation_id = n.id
+        AND e.politic_id= p.id
+        AND e.department_id=d.id
+        AND e.job_level_id=j.id
+        AND e.pos_id=pos.id
+        <!-- employee.name 实体类属性 -->
+        <if test="null!=employee.name and ''!=employee.name">
+            AND e.name LIKE CONCAT('%',#{employee.name},'%')
+        </if>
+        <!-- employee.politicId 实体类属性 -->
+        <if test="null!=employee.politicId">
+            <!-- e.politic_id 数据库表别名和字段名； employee.politicId 实体类属性 -->
+            AND e.politic_id =#{employee.politicId}
+        </if>
+        <if test="null!=employee.nationId">
+            AND e.nation_id =#{employee.nationId}
+        </if>
+        <if test="null!=employee.jobLevelId">
+            AND e.job_level_id =#{employee.jobLevelId}
+        </if>
+        <if test="null!=employee.posId">
+            AND e.pos_id =#{employee.posId}
+        </if>
+        <if test="null!=employee.engageForm and ''!=employee.engageForm">
+            AND e.engage_form =#{employee.engageForm}
+        </if>
+        <if test="null!=employee.departmentId">
+            AND e.department_id =#{employee.departmentId}
+        </if>
+        <!-- beginDateScope 控制器中定义的日期数组参数名 -->
+        <if test="null!=beginDateScope and 2==beginDateScope.length">
+            AND e.begin_date BETWEEN #{beginDateScope[0]} AND #{beginDateScope[1]}
+        </if>
+        ORDER BY e.id
+    </select>
 </mapper>

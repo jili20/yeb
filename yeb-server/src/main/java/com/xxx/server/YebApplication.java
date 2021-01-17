@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author bing  @create 2021/1/13-下午12:29
  */
 @SpringBootApplication
-@MapperScan("com.xxx.server.mapper")
 public class YebApplication {
 
     public static void main(String[] args) {
