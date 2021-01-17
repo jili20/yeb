@@ -1,9 +1,13 @@
 package com.xxx.server.controller;
 
+import com.xxx.server.pojo.Department;
+import com.xxx.server.service.DepartmentService;
+import com.xxx.server.utils.RespBean;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
+import java.util.List;
 
 /**
  * <p>
@@ -13,9 +17,24 @@ import org.springframework.stereotype.Controller;
  * @author Bing
  * @since 2021-01-13
  */
-@Controller
-@RequestMapping("/department")
+@RestController
+@RequestMapping("/system/basic/department")
 public class DepartmentController {
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @ApiOperation(value = "获取所有部门")
+    @GetMapping("/")
+    public List<Department> getAllDepartments(){
+        return departmentService.getAllDepartments();
+    }
+
+    @ApiOperation(value = "添加部门")
+    @PostMapping("/")
+    public RespBean addDep(@RequestBody Department dep){
+        return departmentService.addDep(dep);
+    }
 
 }
 

@@ -2,4 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.DepartmentMapper">
 
+    <!-- 通用查询映射结果 -->
+    <!--    <resultMap id="BaseResultMap" type="Department">-->
+    <!--        <id column="id" property="id"/>-->
+    <!--        <result column="name" property="name"/>-->
+    <!--        <result column="parent_id" property="parentId"/>-->
+    <!--        <result column="dep_path" property="depPath"/>-->
+    <!--        <result column="enabled" property="enabled"/>-->
+    <!--        <result column="is_parent" property="isParent"/>-->
+    <!--    </resultMap>-->
+
+    <!-- 相当于 递归查询 -->
+    <resultMap id="DepartmentWithChildren" type="com.xxx.server.pojo.Department">
+        <collection property="children" ofType="com.xxx.server.pojo.Department"
+                    select="com.xxx.server.mapper.DepartmentMapper.getAllDepartments" column="id">
+            <!-- SELECT * FROM t_department WHERE parent_id=-1
+                 SELECT * FROM t_department WHERE parent_id=1
+                 SELECT * FROM t_department WHERE parent_id=2 .... select ... 再次调用此方法，相当于 递归查询 -->
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, parent_id, dep_path, enabled, is_parent
+    </sql>
+
+    <!-- 添加部门 : 调用存储过程 CALLABLE -->
+    <insert id="addDep" statementType="CALLABLE">
+        call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},#{enabled,mode=IN,
+        jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
+
+    </insert>
+
+    <!-- 获取所有部门 -->
+    <select id="getAllDepartments" resultMap="DepartmentWithChildren">
+        select
+        <include refid="Base_Column_List"/>
+        from t_department where parent_id=#{parentId}
+    </select>
 </mapper>
