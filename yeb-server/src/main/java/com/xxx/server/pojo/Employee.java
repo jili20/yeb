@@ -1,19 +1,17 @@
 package com.xxx.server.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-
+import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
 /**
  * <p>
  * 员工表
@@ -43,7 +41,7 @@ public class Employee implements Serializable {
 
     @ApiModelProperty(value = "出生日期")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     @ApiModelProperty(value = "身份证号")
     private String idCard;
@@ -91,8 +89,8 @@ public class Employee implements Serializable {
     private String school;
 
     @ApiModelProperty(value = "入职日期")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
-    private LocalDateTime beginDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
+    private LocalDate beginDate;
 
     @ApiModelProperty(value = "在职状态")
     private String workState;
@@ -105,20 +103,21 @@ public class Employee implements Serializable {
 
     @ApiModelProperty(value = "转正日期")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
-    private LocalDateTime conversionTime;
+    private LocalDate conversionTime;
+//    private LocalDateTime conversionTime;
 
     @ApiModelProperty(value = "离职日期")
     @TableField("notWork_date")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
-    private LocalDateTime notworkDate;
+    private LocalDate notworkDate;
 
     @ApiModelProperty(value = "合同起始日期")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
-    private LocalDateTime beginContract;
+    private LocalDate beginContract;
 
     @ApiModelProperty(value = "合同终止日期")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
-    private LocalDateTime endContract;
+    private LocalDate endContract;
 
     @ApiModelProperty(value = "工龄")
     private Integer workAge;

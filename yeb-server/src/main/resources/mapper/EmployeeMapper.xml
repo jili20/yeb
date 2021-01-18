@@ -3,7 +3,7 @@
 <mapper namespace="com.xxx.server.mapper.EmployeeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="Employee">
+    <resultMap id="BaseResultMap" type="com.xxx.server.pojo.Employee">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="gender" property="gender"/>
@@ -11,7 +11,7 @@
         <result column="id_card" property="idCard"/>
         <result column="wedlock" property="wedlock"/>
         <result column="nation_id" property="nationId"/>
-        <result column="native_lace" property="nativePlace"/>
+        <result column="native_place" property="nativePlace"/>
         <result column="politic_id" property="politicId"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
@@ -25,10 +25,10 @@
         <result column="school" property="school"/>
         <result column="begin_date" property="beginDate"/>
         <result column="work_state" property="workState"/>
-        <result column="work_id" property="workID"/>
+        <result column="work_id" property="workId"/>
         <result column="contract_term" property="contractTerm"/>
         <result column="conversion_time" property="conversionTime"/>
-        <result column="notWork_date" property="notWorkDate"/>
+        <result column="notWork_date" property="notworkDate"/>
         <result column="begin_contract" property="beginContract"/>
         <result column="end_contract" property="endContract"/>
         <result column="work_age" property="workAge"/>
