@@ -6,12 +6,13 @@
     <modules>
         <module>yeb-server</module>
         <module>yeb-generator</module>
+        <module>yeb-mail</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.1</version>
+        <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 

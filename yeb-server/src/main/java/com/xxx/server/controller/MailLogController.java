@@ -1,7 +1,12 @@
 package com.xxx.server.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.xxx.server.pojo.MailLog;
+import com.xxx.server.service.MailLogService;
+import com.xxx.server.utils.RespBean;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
@@ -13,7 +18,7 @@ import org.springframework.stereotype.Controller;
  * @author Bing
  * @since 2021-01-13
  */
-@Controller
+@RestController
 @RequestMapping("/mailLog")
 public class MailLogController {
 

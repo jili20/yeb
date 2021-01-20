@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入职欢迎邮件</title>
+</head>
+<body>
+欢迎<span th:text="${name}"></span>加入云e办大家庭，您的入职信息如下：
+<table border="1">
+    <tr>
+        <td>姓名</td>
+        <td th:text="${name}"></td>
+    </tr>
+    <tr>
+        <td>职位</td>
+        <td th:text="${posName}"></td>
+    </tr>
+    <tr>
+        <td>职称</td>
+        <td th:text="${joblevelName}"></td>
+    </tr>
+    <tr>
+        <td>部门</td>
+        <td th:text="${departmentName}"></td>
+    </tr>
+</table>
+<p>
+    我们公司的工作宗旨是严格、创新、诚信，您的加入将为我们带来新鲜的血液，带来创新的思绪，以及为我们树立良好的公司形象！
+    希望在以后的工作中，我们能够齐心协力，与时俱进，团结协作！同时也祝您在本公司，工作愉快，实现自己的人生价值！希望
+    在未来的日子里，携手共进！
+</p>
+</body>
+</html>

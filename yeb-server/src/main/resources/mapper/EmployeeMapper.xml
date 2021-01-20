@@ -143,7 +143,7 @@
         AND e.job_level_id=j.id
         AND e.pos_id=pos.id
         <if test="null!=id">
-
+        AND e.id = #{id}
         </if>
         ORDER BY e.id
     </select>

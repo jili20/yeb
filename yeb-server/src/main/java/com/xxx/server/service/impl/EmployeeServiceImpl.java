@@ -4,19 +4,25 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xxx.server.mapper.EmployeeMapper;
+import com.xxx.server.mapper.MailLogMapper;
 import com.xxx.server.pojo.Employee;
+import com.xxx.server.pojo.MailLog;
 import com.xxx.server.service.EmployeeService;
+import com.xxx.server.utils.MailConstants;
 import com.xxx.server.utils.RespBean;
 import com.xxx.server.utils.RespPageBean;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -28,6 +34,12 @@ import java.util.Map;
  */
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate; // 消息队列
+
+    @Autowired
+    private MailLogMapper mailLogMapper;
 
     /**
      * 获取所有员工（分页）
@@ -54,8 +66,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public RespBean maxWorkID() {
         List<Map<String, Object>> maps = baseMapper.selectMaps(new QueryWrapper<Employee>().select("max(work_id)"));
-        return RespBean.success(null, String.format("%08d",
-                Integer.parseInt(maps.get(0).get("max(work_id)").toString()) + 1));
+        return RespBean.success(null, String.format("%08d", Integer.parseInt(maps.get(0).get("max(work_id)").toString()) + 1));
     }
 
     /**
@@ -77,6 +88,26 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         // 计算以年为单位
         employee.setContractTerm(Double.parseDouble(decimalFormat.format(days / 365.00)));
         if (1 == baseMapper.insert(employee)) {
+            // 获取当前行添加员工记录
+            Employee emp = baseMapper.getEmployee(employee.getId()).get(0);
+            // 数据库记录发送的消息
+            String msgId = UUID.randomUUID().toString();
+            MailLog mailLog = new MailLog();
+            mailLog.setMsgId(msgId);
+            mailLog.setEid(employee.getId());
+            mailLog.setStatus(0);
+            mailLog.setRouteKey(MailConstants.MAIL_ROUTING_KEY_NAME);
+            mailLog.setExchange(MailConstants.MAIL_EXCHANGE_NAME);
+            mailLog.setCount(0);
+            mailLog.setTryTime(LocalDateTime.now().plusMinutes(MailConstants.MSG_TIMEOUT));
+            mailLog.setCreateTime(LocalDateTime.now());
+            mailLog.setUpdateTime(LocalDateTime.now());
+            mailLogMapper.insert(mailLog); // 把设置的数据插入数据表
+            // 发送信息 （ Employee 实体类 implements Serializable ）
+            // 参数：交换机名，路由臽名，数据，消息 id
+            rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME, MailConstants.MAIL_ROUTING_KEY_NAME, emp,
+                    new CorrelationData(msgId)); // mq 路由 key
+
             return RespBean.success("添加成功！");
         }
         return RespBean.error("添加失败！");
@@ -84,6 +115,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     /**
      * 查询员工
+     *
      * @param id
      * @return
      */

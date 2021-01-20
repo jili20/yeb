@@ -2,6 +2,7 @@ package com.xxx.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xxx.server.pojo.MailLog;
+import com.xxx.server.utils.RespBean;
 
 /**
  * <p>
@@ -12,5 +13,6 @@ import com.xxx.server.pojo.MailLog;
  * @since 2021-01-13
  */
 public interface MailLogService extends IService<MailLog> {
+
 
 }

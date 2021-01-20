@@ -17,4 +17,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailLogServiceImpl extends ServiceImpl<MailLogMapper, MailLog> implements MailLogService {
 
+
 }
