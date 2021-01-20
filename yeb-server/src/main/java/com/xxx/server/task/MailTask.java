@@ -42,7 +42,7 @@ public class MailTask {
                 mailLogService.update(new UpdateWrapper<MailLog>().set("status",2).eq("msgId",mailLog.getMsgId()));
             }
             mailLogService.update(new UpdateWrapper<MailLog>().set("count",mailLog.getCount()+1).set("update_time",
-                    LocalDateTime.now()).set("try_time",LocalDateTime.now().plusMinutes(MailConstants.MSG_TIMEOUT)));
+                    LocalDateTime.now()).set("try_time",LocalDateTime.now().plusMinutes(MailConstants.MSG_TIMEOUT)).eq("msg_id",mailLog.getMsgId()));
             Employee emp = employeeService.getEmployee(mailLog.getEid()).get(0);
             // 重新发送消息,参数：交换机名、路由键、对象、
             rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME,MailConstants.MAIL_ROUTING_KEY_NAME,emp,

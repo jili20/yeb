@@ -78,7 +78,6 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public RespBean addEmp(Employee employee) {
         // 处理合同期限，保留两位小数
-        // 注意实体类日期类型为 LocalDate
         LocalDate beginContract = employee.getBeginContract();// 合同开始时间
         LocalDate endContract = employee.getEndContract();// 合同结束时间
         // 计算 两个日期相差多少天
@@ -92,6 +91,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             Employee emp = baseMapper.getEmployee(employee.getId()).get(0);
             // 数据库记录发送的消息
             String msgId = UUID.randomUUID().toString();
+            //String msgId = "123456";
             MailLog mailLog = new MailLog();
             mailLog.setMsgId(msgId);
             mailLog.setEid(employee.getId());
@@ -103,8 +103,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
             mailLog.setCreateTime(LocalDateTime.now());
             mailLog.setUpdateTime(LocalDateTime.now());
             mailLogMapper.insert(mailLog); // 把设置的数据插入数据表
-            // 发送信息 （ Employee 实体类 implements Serializable ）
-            // 参数：交换机名，路由臽名，数据，消息 id
+            // 发送信息
             rabbitTemplate.convertAndSend(MailConstants.MAIL_EXCHANGE_NAME, MailConstants.MAIL_ROUTING_KEY_NAME, emp,
                     new CorrelationData(msgId)); // mq 路由 key
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
  * @since 2021-01-13
  */
 @Controller
-@RequestMapping("/salary")
+@RequestMapping("/salary/sob") // 路径对应菜单表 工资账套管理
 public class SalaryController {
 
 }
