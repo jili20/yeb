@@ -60,6 +60,26 @@
         </association>
     </resultMap>
 
+    <resultMap id="EmployeeWithSalary" type="com.xxx.server.pojo.Employee" extends="BaseResultMap">
+        <association property="salary" javaType="com.xxx.server.pojo.Salary">
+            <id column="sid" property="id"/>
+            <result column="sname" property="name"/>
+            <result column="abasicSalary" property="allSalary"/>
+            <result column="sbonus" property="bonus"/>
+            <result column="slunch_salary" property="lunchSalary"/>
+            <result column="straffic_salary" property="trafficSalary"/>
+            <result column="sallSalary" property="allSalary"/>
+            <result column="spensionBase" property="pensionBase"/>
+            <result column="smedicalBase" property="medicalBase"/>
+            <result column="smedicalPer" property="medicalPer"/>
+            <result column="saccumulationFundBase" property="accumulationFundBase"/>
+            <result column="saccumulationFund_Per" property="accumulationFundPer"/>
+        </association>
+        <association property="department" javaType="com.xxx.server.pojo.Department">
+            <result column="dname" property="name"/>
+        </association>
+    </resultMap>
+
     <select id="getEmployeeByPage" resultMap="EmployeeInfo">
         SELECT
         e.*,
@@ -143,8 +163,33 @@
         AND e.job_level_id=j.id
         AND e.pos_id=pos.id
         <if test="null!=id">
-        AND e.id = #{id}
+            AND e.id = #{id}
         </if>
+        ORDER BY e.id
+    </select>
+
+
+    <!--  获取所有员工账套(分页）-->
+    <select id="getEmployeeWithSalary" resultMap="EmployeeWithSalary">
+        SELECT
+            e.*,
+            d.name AS dname,
+            s.id AS sid,
+            s.name AS sname,
+            s.basic_salary AS abasicSalary,
+            s.bonus AS sbonus,
+            s.lunch_salary AS slunch_salary,
+            s.traffic_salary AS straffic_salary,
+            s.all_salary AS sallSalary,
+            s.pension_base AS spensionBase,
+            s.pension_per AS spensionPer,
+            s.medical_base AS smedicalBase,
+            s.medical_per AS smedicalPer,
+            s.accumulation_fund_base AS saccumulationFundBase,
+            s.accumulation_fund_per AS saccumulationFund_Per
+        FROM t_employee e
+        LEFT JOIN t_salary s ON e.salary_id = s.id
+        LEFT JOIN t_department d ON e.department_id = d.id
         ORDER BY e.id
     </select>
 </mapper>

@@ -89,7 +89,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",                  // 放行 swagger 资源
                 "/swagger-resources/**",        // 放行 swagger 资源
                 "/v2/api-docs/**",              // 放行 swagger 资源
-                "/captcha"      // 验证码接口
+                "/captcha",      // 验证码接口
+                "/ws/**"
         );
     }
 
