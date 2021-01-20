@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +74,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public RespBean login(String username, String password, String code, HttpServletRequest request) {
         // 校验验证码
         String captcha = (String) request.getSession().getAttribute("captcah");
-        if (StringUtils.isEmpty(code)||!captcha.equalsIgnoreCase(code)) {
+        if (StringUtils.isEmpty(code) || !captcha.equalsIgnoreCase(code)) {
             return RespBean.error("验证码输入错误，请重新输入！");
         }
         // 登录
@@ -114,6 +115,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 根据用户 id 查询对应角色列表
+     *
      * @param adminId
      * @return
      */
@@ -124,16 +126,18 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     /**
      * 获取所有操作员
+     *
      * @param keywords
      * @return
      */
     @Override
     public List<Admin> getAllAdmins(String keywords) {
-        return baseMapper.getAllAdmins(AdminUtils.getCurrentAdmin().getId(),keywords);
+        return baseMapper.getAllAdmins(AdminUtils.getCurrentAdmin().getId(), keywords);
     }
 
     /**
      * 更新操作员角色
+     *
      * @param adminId
      * @param rids
      * @return
@@ -142,13 +146,37 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     @Transactional // 开启事务
     public RespBean addAdminRole(Integer adminId, Integer[] rids) {
         // 先删除全部，后调用方法重新全部添加
-        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("admin_id",adminId));
+        adminRoleMapper.delete(new QueryWrapper<AdminRole>().eq("admin_id", adminId));
         Integer result = adminRoleMapper.addAdminRole(adminId, rids);
-        if (rids.length==result) {
+        if (rids.length == result) {
             return RespBean.success("更新成功！");
         }
         return RespBean.error("更新失败！");
 
+    }
+
+    /**
+     * 更新用户密码
+     *
+     * @param oldPass
+     * @param pass
+     * @param adminId
+     * @return
+     */
+    @Override
+    public RespBean updateAdminPassword(String oldPass, String pass, Integer adminId) {
+        Admin admin = baseMapper.selectById(adminId);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        // 比对密码，判断旧密码是否正确
+        if (encoder.matches(oldPass, admin.getPassword())) {
+            // 设置密码，并加密
+            admin.setPassword(encoder.encode(pass));
+            int result = baseMapper.updateById(admin);
+            if (1 == result) {
+                return RespBean.success("更新成功！");
+            }
+        }
+        return RespBean.error("更新失败！");
     }
 
 
