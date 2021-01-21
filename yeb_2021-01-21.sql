@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.0.22)
 # Database: yeb
-# Generation Time: 2021-01-20 13:56:14 +0000
+# Generation Time: 2021-01-21 11:14:46 +0000
 # ************************************************************
 
 
@@ -399,7 +399,7 @@ VALUES
 	(6,'/','/home','Home','系统管理','fa fa-windows',NULL,1,1,1),
 	(7,'/employee/basic/**','/emp/basic','EmpBasic','基本资料',NULL,NULL,1,2,1),
 	(8,'/employee/advanced/**','/emp/adv','EmpAdv','高级资料',NULL,NULL,1,2,1),
-	(9,'/personnel/emp/**','/per/emp','PerEmp','员工资料',NULL,NULL,1,3,1),
+	(9,'/personnel/emp/**','/per/emp','PerEmp','员工资料','fa fa-user-circle-o',NULL,1,3,1),
 	(10,'/personnel/ec/**','/per/ec','PerEc','员工奖惩',NULL,NULL,1,3,1),
 	(11,'/personnel/train/**','/per/train','PerTrain','员工培训',NULL,NULL,1,3,1),
 	(12,'/personnel/salary/**','/per/salary','PerSalary','员工调薪',NULL,NULL,1,3,1),
@@ -414,7 +414,7 @@ VALUES
 	(21,'/statistics/personnel/**','/sta/pers','StaPers','人事信息统计',NULL,NULL,1,5,1),
 	(22,'/statistics/recored/**','/sta/record','StaRecord','人事记录统计',NULL,NULL,1,5,1),
 	(23,'/system/basic/**','/sys/basic','SysBasic','基础信息设置',NULL,NULL,1,6,1),
-	(24,'/system/config/**','/sys/cfg','SysCfg','系统管理',NULL,NULL,1,6,1),
+	(24,'/system/config/**','/sys/config','SysConfig','系统管理',NULL,NULL,1,6,1),
 	(25,'/system/log/**','/sys/log','SysLog','操作日志管理',NULL,NULL,1,6,1),
 	(26,'/system/admin/**','/sys/admin','SysAdmin','操作员管理',NULL,NULL,1,6,1),
 	(27,'/system/data/**','/sys/data','SysData','备份恢复数据库',NULL,NULL,1,6,1),

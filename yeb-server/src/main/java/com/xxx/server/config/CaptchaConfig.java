@@ -22,7 +22,8 @@ public class CaptchaConfig {
         // 是否有边框
         properties.setProperty("kaptcha.border","yes");
         // 设置边框颜色
-        properties.setProperty("kaptcha.border.color","105,179,90");
+        //properties.setProperty("kaptcha.border.color","105,179,90");
+        properties.setProperty("kaptcha.border.color","224,224,224");
         // 边框粗细度，默认为1
         properties.setProperty("kaptcha.border.thickness","1");
         // 设置验证码文本字符颜色，默认黑色
