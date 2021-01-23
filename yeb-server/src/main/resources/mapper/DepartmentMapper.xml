@@ -2,8 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.DepartmentMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="Department">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="parent_id" property="parentId" />
+        <result column="dep_path" property="depPath" />
+        <result column="enabled" property="enabled" />
+        <result column="is_parent" property="isParent" />
+    </resultMap>
+
     <!-- 相当于 递归查询 -->
-    <resultMap id="DepartmentWithChildren" type="com.xxx.server.pojo.Department">
+    <resultMap id="DepartmentWithChildren" type="com.xxx.server.pojo.Department" extends="BaseResultMap">
         <collection property="children" ofType="com.xxx.server.pojo.Department"
                     select="com.xxx.server.mapper.DepartmentMapper.getAllDepartments" column="id">
             <!-- SELECT * FROM t_department WHERE parent_id=-1
