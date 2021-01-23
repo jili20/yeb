@@ -4,6 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="Department">
+        <!-- 字段映射：column 表字段，property 实体类属性名-->
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="parent_id" property="parentId" />

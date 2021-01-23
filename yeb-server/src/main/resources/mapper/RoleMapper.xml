@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xxx.server.mapper.RoleMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxx.server.pojo.Role">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="name_zh" property="nameZh" />
+    </resultMap>
+
     <!-- 根据用户 id 查询对应角色列表 -->
     <select id="getRoles" resultType="com.xxx.server.pojo.Role">
         SELECT

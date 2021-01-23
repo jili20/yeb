@@ -3,6 +3,13 @@
 <mapper namespace="com.xxx.server.mapper.AdminRoleMapper">
 
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="AdminRole">
+        <id column="id" property="id" />
+        <result column="admin_id" property="adminId" />
+        <result column="rid" property="rid" />
+    </resultMap>
+
     <!-- 更新操作员角色 -->
     <update id="addAdminRole">
         insert into t_admin_role(admin_id,rid) values

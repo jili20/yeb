@@ -21,23 +21,20 @@ import java.util.Collection;
 public class CustomUrlDecisionManager implements AccessDecisionManager {
 
     @Override
-    public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         for (ConfigAttribute configAttribute : configAttributes) {
-            // 当前 url 所需要角色
+            //当前url所需要的角色
             String needRole = configAttribute.getAttribute();
-            // 判断角色是否登录即可访问的角色 ROLE_LOGIN，此角色在 CustomFilter 设置了
-            if ("ROLE_LOGIN".equals(needRole)) {
-                // 判断是否登录
-                if (authentication instanceof AnonymousAuthenticationToken) {
-                    throw new AccessDeniedException("尚未登录，请登录！");
-                } else {
+            if ("ROLE_LOGIN".equals(needRole)){
+                if (authentication instanceof AnonymousAuthenticationToken){
+                    throw new AccessDeniedException("尚未登录，请登录");
+                }else {
                     return;
                 }
             }
-            // 判断用户角色是否为 url 所需角色
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority authority : authorities) {
-                if (authority.getAuthority().equals(needRole)) {
+                if (authority.getAuthority().equals(needRole)){
                     return;
                 }
             }
@@ -46,12 +43,12 @@ public class CustomUrlDecisionManager implements AccessDecisionManager {
     }
 
     @Override
-    public boolean supports(ConfigAttribute configAttribute) {
+    public boolean supports(ConfigAttribute attribute) {
         return false;
     }
 
     @Override
-    public boolean supports(Class<?> aClass) {
+    public boolean supports(Class<?> clazz) {
         return false;
     }
 }
