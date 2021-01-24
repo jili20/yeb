@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 8.0.22)
 # Database: yeb
-# Generation Time: 2021-01-21 11:14:46 +0000
+# Generation Time: 2021-01-24 01:20:45 +0000
 # ************************************************************
 
 
@@ -45,11 +45,11 @@ LOCK TABLES `t_admin` WRITE;
 
 INSERT INTO `t_admin` (`id`, `name`, `phone`, `telephone`, `address`, `username`, `password`, `user_face`, `remark`, `enabled`)
 VALUES
-	(1,'系统管理员','13761719602','3259272','广东深圳','admin','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg',NULL,1),
-	(2,'何淑华','13761719602','3259272','广东深圳123','bing','$2a$10$AG7skrpZrWvJZerB3xRBMOZKrIrng5jqMJvdoU8tA3sdMpflkwm/i','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg',NULL,1),
-	(3,'安溪','13761719602','3259272','广东深圳','naqiao','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg',NULL,1),
-	(4,'梦寐','13761719602','3259272','广东深圳','leisu','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg',NULL,1),
-	(5,'武军','13761719602','3259272','广东深圳','aaa','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg',NULL,1);
+	(1,'系统管理员','13761719602','3259272','广东深圳','admin','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg','还没有备注',1),
+	(2,'何淑华','13761719602','3259272','广东深圳123','bing','$2a$10$AG7skrpZrWvJZerB3xRBMOZKrIrng5jqMJvdoU8tA3sdMpflkwm/i','https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwx2.sinaimg.cn%2Fmw690%2F5301ff11ly1gb58jx3jllj20p00p0wh8.jpg&refer=http%3A%2F%2Fwx2.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613833868&t=f8c9590fba2943a762fd7248481da017','还没有备注',1),
+	(3,'安溪','13761719602','3259272','广东深圳','naqiao','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg','还没有备注',1),
+	(4,'梦寐','13761719602','3259272','广东深圳','leisu','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg','还没有备注',1),
+	(5,'武军','13761719602','3259272','广东深圳','aaa','$2a$10$kMiEaKxQPMLxN2aLmJoErufsJHpRyrx4IdLMcsWAgFU2S2OoszXSW','https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2871119264,233376496&fm=26&gp=0.jpg','还没有备注',1);
 
 /*!40000 ALTER TABLE `t_admin` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -77,16 +77,12 @@ VALUES
 	(6,4,4),
 	(7,4,5),
 	(8,1,6),
-	(9,3,3),
-	(10,3,4),
-	(11,2,3),
-	(12,2,4),
-	(13,2,4),
-	(14,2,3),
 	(18,5,2),
 	(19,5,3),
 	(20,5,4),
-	(21,2,6);
+	(81,3,6),
+	(82,3,1),
+	(84,2,1);
 
 /*!40000 ALTER TABLE `t_admin_role` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -140,8 +136,9 @@ VALUES
 	(9,'西北市场部',5,'.1.2.3.5.9',1,1),
 	(10,'贵阳市场',9,'.1.2.3.5.8.9.10',1,1),
 	(11,'乌当区市场',10,'1.2.3.5.9.10.11',1,0),
-	(12,'技术部',3,'.1.2.3.12',1,0),
-	(13,'运维部',3,'.1.2.3.13',1,0);
+	(12,'技术部',3,'.1.2.3.12',1,1),
+	(13,'运维部',3,'.1.2.3.13',1,1),
+	(31,'测试部门2',13,'.1.2.3.13.31',1,0);
 
 /*!40000 ALTER TABLE `t_department` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -313,7 +310,7 @@ DROP TABLE IF EXISTS `t_joblevel`;
 CREATE TABLE `t_joblevel` (
   `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(50) DEFAULT NULL COMMENT '职称名称',
-  `title_level` enum('正高级','副高级','初级','中级','高级') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '职称等级',
+  `title_level` enum('正高级','副高级','中级','初级','员级') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '职称等级',
   `create_date` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `enabled` tinyint(1) DEFAULT '1' COMMENT '是否启用',
   PRIMARY KEY (`id`)
@@ -327,11 +324,12 @@ VALUES
 	(1,'教授','正高级','2021-01-16 15:29:22',1),
 	(2,'副教授','副高级','2021-01-16 15:29:22',1),
 	(3,'助教','初级','2021-01-16 15:29:22',1),
-	(4,'讲师','中级','2021-01-16 15:29:22',0),
+	(4,'讲师','中级','2021-01-22 17:07:46',0),
 	(5,'初级工程师','初级','2021-01-16 15:29:22',1),
 	(6,'中级工程师','中级','2021-01-16 15:29:22',1),
 	(7,'高级工程师','副高级','2021-01-16 15:29:22',1),
-	(8,'骨灰级工程师','正高级','2021-01-16 15:29:22',1);
+	(8,'骨灰级工程师','正高级','2021-01-16 15:29:22',1),
+	(12,'测试工程师','中级','2021-01-22 17:07:57',0);
 
 /*!40000 ALTER TABLE `t_joblevel` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -395,7 +393,7 @@ VALUES
 	(2,'/','/home','Home','员工资料','fa fa-user-circle-o',NULL,1,1,1),
 	(3,'/','/home','Home','人事管理','fa fa-address-card-o',NULL,1,1,1),
 	(4,'/','/home','Home','薪资管理','fa fa-money',NULL,1,1,1),
-	(5,'/','/home','Home','统计管理','fa faa-bar-chart',NULL,1,1,1),
+	(5,'/','/home','Home','统计管理','fa fa-bar-chart',NULL,1,1,1),
 	(6,'/','/home','Home','系统管理','fa fa-windows',NULL,1,1,1),
 	(7,'/employee/basic/**','/emp/basic','EmpBasic','基本资料',NULL,NULL,1,2,1),
 	(8,'/employee/advanced/**','/emp/adv','EmpAdv','高级资料',NULL,NULL,1,2,1),
@@ -441,8 +439,7 @@ LOCK TABLES `t_menu_role` WRITE;
 
 INSERT INTO `t_menu_role` (`id`, `mid`, `rid`)
 VALUES
-	(1,7,3),
-	(2,7,6),
+	(2,7,4),
 	(3,9,6),
 	(4,10,6),
 	(5,11,6),
@@ -479,9 +476,64 @@ VALUES
 	(44,17,1),
 	(45,18,1),
 	(46,19,1),
-	(47,7,2),
-	(48,8,2),
-	(49,9,2);
+	(47,7,1),
+	(48,8,1),
+	(49,9,1),
+	(50,7,3),
+	(51,8,3),
+	(52,7,10),
+	(53,8,10),
+	(54,7,9),
+	(55,8,9),
+	(56,9,9),
+	(57,10,9),
+	(58,11,9),
+	(59,12,9),
+	(60,13,9),
+	(61,14,9),
+	(62,15,9),
+	(63,16,9),
+	(64,17,9),
+	(65,18,9),
+	(66,19,9),
+	(67,20,9),
+	(68,21,9),
+	(69,22,9),
+	(70,23,9),
+	(71,24,9),
+	(72,25,9),
+	(73,26,9),
+	(74,27,9),
+	(75,28,9),
+	(76,7,12),
+	(77,8,12),
+	(78,9,12),
+	(79,10,12),
+	(80,11,12),
+	(81,12,12),
+	(82,13,12),
+	(83,7,11),
+	(84,8,11),
+	(85,9,11),
+	(86,10,11),
+	(87,11,11),
+	(88,12,11),
+	(89,13,11),
+	(90,14,11),
+	(91,15,11),
+	(92,16,11),
+	(93,17,11),
+	(94,18,11),
+	(95,19,11),
+	(96,20,11),
+	(97,21,11),
+	(98,22,11),
+	(99,23,11),
+	(100,24,11),
+	(101,25,11),
+	(102,26,11),
+	(103,27,11),
+	(104,28,11);
 
 /*!40000 ALTER TABLE `t_menu_role` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -631,12 +683,12 @@ LOCK TABLES `t_position` WRITE;
 
 INSERT INTO `t_position` (`id`, `name`, `create_date`, `enabled`)
 VALUES
-	(1,'技术总监','2020-03-31 16:20:34',1),
-	(2,'运营总监','2020-03-31 16:20:34',1),
-	(3,'市场总监','2020-03-31 16:20:34',1),
-	(4,'研发工程师','2020-03-31 16:20:34',1),
-	(5,'运维工程师','2020-03-31 16:20:34',1),
-	(8,'测试角色','2021-01-16 14:32:20',1);
+	(1,'技术总监','2021-01-22 14:18:16',1),
+	(2,'运营总监','2021-01-22 00:00:00',1),
+	(3,'市场总监','2021-01-22 00:00:00',1),
+	(4,'研发工程师','2021-01-22 00:00:00',1),
+	(5,'运维工程师','2021-01-22 00:00:00',1),
+	(6,'测试职位','2021-01-22 00:00:00',1);
 
 /*!40000 ALTER TABLE `t_position` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -662,9 +714,9 @@ VALUES
 	(1,'ROLE_manager','部门经理'),
 	(2,'ROLE_personnel','人事专员'),
 	(3,'ROLE_recruiter','招聘主管'),
-	(4,'ROLE_train','培训主管'),
 	(5,'ROLE_performance','薪酬绩效主管'),
-	(6,'ROLE_admin','系统管理员');
+	(6,'ROLE_admin','系统管理员'),
+	(13,'ROLE_training','培训主管');
 
 /*!40000 ALTER TABLE `t_role` ENABLE KEYS */;
 UNLOCK TABLES;
