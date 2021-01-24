@@ -41,4 +41,5 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
      * @return
      */
     Page<Employee> getEmployeeWithSalary(Page<Employee> page);
+
 }
