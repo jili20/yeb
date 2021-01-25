@@ -53,7 +53,7 @@ public class Salary implements Serializable {
     private Integer pensionBase;
 
     @ApiModelProperty(value = "养老金比率")
-    private Integer pensionPer;
+    private Float pensionPer;
 
     @ApiModelProperty(value = "启用时间")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "Asia/Shanghai")
